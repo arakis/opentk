@@ -1,4 +1,5 @@
 ﻿using System.IO;
+
 using Bind.GL2;
 
 namespace Bind.ES
@@ -6,12 +7,11 @@ namespace Bind.ES
     // Generator implementation for OpenGL ES 1.0 and 1.1
     internal class ESGenerator : Generator
     {
-        public ESGenerator(Settings settings)
-            : base(settings)
+        public ESGenerator(Settings settings) : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "./ES11");
-            Settings.DefaultOutputNamespace = "OpenToolkit.Graphics.ES11";
+                Settings.OutputPath, "./ES11");
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
             Settings.DefaultImportsFile = "ES11Core.cs";
             Settings.DefaultDelegatesFile = "ES11Delegates.cs";
             Settings.DefaultEnumsFile = "ES11Enums.cs";

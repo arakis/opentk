@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using CommandLine;
@@ -33,6 +34,15 @@ namespace OpenTK.Rewrite
 
         private static void Main(string[] args)
         {
+            // These prevent us to accidently generate wrong code because of
+            // locale dependent string functions (probably not relevant here
+            // since this program supposed just rewrite IL bytecode but we do it
+            // anyway just to be safe).
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(result => Options = result)
                 .WithNotParsed(error => Environment.Exit(-1));
@@ -119,7 +129,7 @@ namespace OpenTK.Rewrite
                         TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
                         TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
 
-                        TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenToolkit.Graphics.BindingsBase")).First();
+                        TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.Graphics.BindingsBase")).First();
 
                         foreach (var module in assembly.Modules)
                         {

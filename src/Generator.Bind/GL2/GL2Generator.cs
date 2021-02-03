@@ -31,22 +31,17 @@ namespace Bind.GL2
 {
     internal class GL2Generator : Generator
     {
-        public GL2Generator(Settings settings)
-            : base(settings)
+        public GL2Generator(Settings settings) : base(settings)
         {
             if (Settings.Compatibility == Settings.Legacy.Tao)
             {
                 Settings.OutputNamespace = "Tao.OpenGl";
                 Settings.OutputClass = "Gl";
             }
-            else
-            {
-                // Defaults
-            }
 
             Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "./OpenGL2");
-            Settings.DefaultOutputNamespace = "OpenToolkit.Graphics.OpenGL";
+                Settings.OutputPath, "./OpenGL2");
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
             Settings.DefaultImportsFile = "GLCore.cs";
             Settings.DefaultDelegatesFile = "GLDelegates.cs";
             Settings.DefaultEnumsFile = "GLEnums.cs";
